@@ -17,10 +17,10 @@ type Logger interface {
 type LoggerImpl struct{}
 
 const (
-	DEBUG  = "debug"
-	INFO   = "info"
-	ERROR  = "error"
-	ERRORX = "goerror"
+	DEBUG  = "DEBUG"
+	INFO   = "INFO"
+	ERROR  = "ERROR"
+	ERRORX = "GO-ERROR"
 )
 
 /*
