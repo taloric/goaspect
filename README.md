@@ -1,9 +1,9 @@
 # goaspect
 An implement for golang-version AspectF
 
-record execute process and Act as an AOP
+record execute process and act as an AOP
 
-Functions should have :
+functions list :
 
 | function name | params | behavior |
 | :--- | :---: | --- |
@@ -15,10 +15,16 @@ Functions should have :
 | While |  | function will keep run while condition returns true |
 | Log |  | log something |
 | Watch |  | record execution time |
-| TrackError |  | track function error |
-| RecoverPanic |  | recover function panic(how?) |
+| TrackPanic |  | track function panic |
 
------
+------
+Retry / Delay / RunAsync : Describe how to run a function
+
+With / Until / While : Describe a function with condition
+
+Log / Watch / TrackPanic : Track function execute process
+
+------
 call a function with aspect like:
 ```go
 RunnerStart()
@@ -26,5 +32,6 @@ RunnerStart()
 .With()
 .Watch()
 .Log().Log()
-.Do()
+.Do(func(){
+})
 ```

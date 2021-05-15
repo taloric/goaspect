@@ -1,6 +1,7 @@
 package goaspect
 
 type Runner struct {
+	Logger *Logger
 }
 
 //interface implement validation
@@ -9,8 +10,10 @@ var _ AspectFunc = (*Runner)(nil)
 var ActionChain AtomicAct
 
 //Get a new instance of Runner
-func Start() *Runner {
-	return &Runner{}
+func Start(logger *Logger) *Runner {
+	return &Runner{
+		Logger: logger,
+	}
 }
 
 func (runner *Runner) Combine(action AtomicAct) AspectFunc {

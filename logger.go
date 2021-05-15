@@ -14,31 +14,38 @@ type Logger interface {
 	Errorx(err error, message string)
 }
 
-type LoggerImpl struct{}
+type LoggerImpl struct {
+}
+
+type LogLevel string
 
 const (
-	DEBUG  = "DEBUG"
-	INFO   = "INFO"
-	ERROR  = "ERROR"
-	ERRORX = "GO-ERROR"
+	DEBUG  LogLevel = "DEBUG"
+	INFO   LogLevel = "INFO"
+	ERROR  LogLevel = "ERROR"
+	ERRORX LogLevel = "GOERROR"
 )
 
 /*
 default implements for interface-Logger down here
 */
 
+//log debug level
 func (logger *LoggerImpl) Debug(message string) {
 	fmt.Printf("[%s] %s \n", DEBUG, message)
 }
 
+//log info level
 func (logger *LoggerImpl) Info(message string) {
 	fmt.Printf("[%s] %s \n", INFO, message)
 }
 
+//log error level
 func (logger *LoggerImpl) Error(message string) {
 	fmt.Printf("[%s] %s \n", ERROR, message)
 }
 
+//log error level with golang-error
 func (logger *LoggerImpl) Errorx(err error, message string) {
-	fmt.Printf("[%s] [%s] %s \n", ERRORX, err.Error(), message)
+	fmt.Printf("[%s] [%s] \n%s \n", ERRORX, err.Error(), message)
 }
