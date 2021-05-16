@@ -32,6 +32,12 @@ RunnerStart()
 .With()
 .Watch()
 .Log().Log()
-.Do(func(){
+.Execute(func(){
 })
 ```
+
+-----
+#### todolist
+1. aspect function extension (API Design) 
+2. reflect and object type validation on Complete method
+3. maybe another implement of interface

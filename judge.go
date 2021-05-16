@@ -1,17 +1,17 @@
 package goaspect
 
-//func not execute if condition returns false
-func (runner *Runner) With(condition func() bool) AspectFunc {
-	return runner.Combine(func(af AtomicFunc) {
+//target function won't execute if condition returns false
+func (aspect *Aspect) With(condition func() bool) *Aspect {
+	return aspect.Combine(func(af AtomicFunc) {
 		if condition() {
 			af()
 		}
 	})
 }
 
-//func not execute until condition returns true
-func (runner *Runner) Until(condition func() bool) AspectFunc {
-	return runner.Combine(func(af AtomicFunc) {
+//target function won't execute until condition returns true
+func (aspect *Aspect) Until(condition func() bool) *Aspect {
+	return aspect.Combine(func(af AtomicFunc) {
 		for {
 			if !condition() {
 				continue
@@ -22,9 +22,9 @@ func (runner *Runner) Until(condition func() bool) AspectFunc {
 	})
 }
 
-//func will execute while condition returns true
-func (runner *Runner) While(condition func() bool) AspectFunc {
-	return runner.Combine(func(af AtomicFunc) {
+//target function keep execution while condition returns true
+func (aspect *Aspect) While(condition func() bool) *Aspect {
+	return aspect.Combine(func(af AtomicFunc) {
 		for {
 			if condition() {
 				af()

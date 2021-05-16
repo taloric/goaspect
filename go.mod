@@ -1,3 +1,3 @@
-module github.com/simpgoaop
+module github.com/goaspect
 
 go 1.16

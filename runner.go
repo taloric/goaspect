@@ -1,20 +1,10 @@
 package goaspect
 
+//an implement of Interface AspectFunc
 type Runner struct {
-	Logger *Logger
 }
-
-//interface implement validation
-var _ AspectFunc = (*Runner)(nil)
 
 var ActionChain AtomicAct
-
-//Get a new instance of Runner
-func Start(logger *Logger) *Runner {
-	return &Runner{
-		Logger: logger,
-	}
-}
 
 func (runner *Runner) Combine(action AtomicAct) AspectFunc {
 	if ActionChain == nil {
@@ -24,7 +14,6 @@ func (runner *Runner) Combine(action AtomicAct) AspectFunc {
 		newChain := func(fun AtomicFunc) {
 			//wrap oldchain to chain call ( action1 -> action2 ->..-> real action)
 			oldChain(func() {
-				//closure here
 				action(fun)
 			})
 		}
@@ -41,7 +30,7 @@ func (runner *Runner) Execute(action AtomicFunc) {
 	}
 }
 
-func (runner *Runner) Complete(action AtomicRet) (obj interface{}) {
+func (runner *Runner) Complete(action AtomicRet) interface{} {
 	actionRetVal := action
 	if ActionChain == nil {
 		return actionRetVal()
