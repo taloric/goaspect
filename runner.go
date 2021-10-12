@@ -2,42 +2,44 @@ package goaspect
 
 //an implement of Interface AspectFunc
 type Runner struct {
+	actinoChain AtomicAct
 }
 
-var ActionChain AtomicAct
-
 func (runner *Runner) Combine(action AtomicAct) AspectFunc {
-	if ActionChain == nil {
-		ActionChain = action
+	if runner.actinoChain == nil {
+		runner.actinoChain = action
 	} else {
-		oldChain := ActionChain
+		oldChain := runner.actinoChain
 		newChain := func(fun AtomicFunc) {
 			//wrap oldchain to chain call ( action1 -> action2 ->..-> real action)
+			//actually call chain like : action1( action2 ( action3 ( real action ) ) )
+			//an old action wrap new action and make new action as a parameter to execute
 			oldChain(func() {
 				action(fun)
 			})
 		}
-		ActionChain = newChain
+		runner.actinoChain = newChain
 	}
 	return runner
 }
 
 func (runner *Runner) Execute(action AtomicFunc) {
-	if ActionChain == nil {
+	if runner.actinoChain == nil {
 		action()
 	} else {
-		ActionChain(action)
+		//when really execute something, action chain wrap real action as a func parameter
+		runner.actinoChain(action)
 	}
 }
 
 func (runner *Runner) Complete(action AtomicRet) interface{} {
 	actionRetVal := action
-	if ActionChain == nil {
+	if runner.actinoChain == nil {
 		return actionRetVal()
 	} else {
 		//todo : object type validation & object type conversion
 		var newObj interface{}
-		ActionChain(func() {
+		runner.actinoChain(func() {
 			//maybe panic here
 			newObj = actionRetVal()
 		})

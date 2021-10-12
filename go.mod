@@ -1,3 +1,3 @@
-module github.com/goaspect
+module github.com/taloric/goaspect
 
-go 1.16
+go 1.17
